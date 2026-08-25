@@ -1,0 +1,428 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 16px;
+}
+
+/* ==========================================
+   Glass surface design tokens
+   (replaces scattered bg-white/dark:bg-tuh-indigo|navy/N + border-tuh-purple/N
+   + backdrop-blur-* combos with a single tuh-glass-1/2/3 utility)
+   All values are derived from the existing tuh.purple #A78BFA,
+   tuh.indigo #0d1235, tuh.navy #04081c palette — no new hues introduced.
+   ========================================== */
+:root {
+  --tuh-surface-1: rgba(255, 255, 255, 0.78);
+  --tuh-surface-2: rgba(255, 255, 255, 0.55);
+  --tuh-surface-3: rgba(255, 255, 255, 0.30);
+  --tuh-border-glass: rgba(139, 92, 246, 0.18);
+  --tuh-border-glass-strong: rgba(139, 92, 246, 0.35);
+}
+
+.dark {
+  --tuh-surface-1: rgba(30, 24, 66, 0.85);
+  --tuh-surface-2: rgba(22, 20, 51, 0.70);
+  --tuh-surface-3: rgba(22, 20, 51, 0.45);
+  --tuh-border-glass: rgba(255, 255, 255, 0.14);
+  --tuh-border-glass-strong: rgba(255, 255, 255, 0.30);
+}
+
+.tuh-glass-1 {
+  background: var(--tuh-surface-1);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--tuh-border-glass);
+}
+.tuh-glass-2 {
+  background: var(--tuh-surface-2);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border: 1px solid var(--tuh-border-glass);
+}
+.tuh-glass-3 {
+  background: var(--tuh-surface-3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--tuh-border-glass);
+}
+.tuh-border-glass-strong { border-color: var(--tuh-border-glass-strong) !important; }
+
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-300;
+    font-weight: 500;
+    font-family: 'Sarabun', sans-serif !important;
+  }
+
+  html:not(.dark) body {
+    background: linear-gradient(-45deg, #C0D1FC, #E5ECFD, #E7C6FD, #F4D6FB);
+    background-size: 400% 400%;
+    animation: ambientGlow 15s ease infinite;
+    color: #04081c;
+  }
+
+  html.dark body {
+    background: linear-gradient(-45deg, #04081c, #0d1235, #360759, #660f99);
+    background-size: 400% 400%;
+    animation: ambientGlow 15s ease infinite;
+    color: #f8fafc;
+  }
+}
+
+/* Custom Gradients matching the User Chatbot pastel colors */
+.bg-tuh-gradient-1 {
+  background: linear-gradient(135deg, #809BFE 0%, #C0D1FC 100%);
+}
+
+.bg-tuh-gradient-2 {
+  background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C0D1FC 100%);
+}
+
+/* Text Gradients */
+.text-tuh-gradient {
+  background-image: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #809BFE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-tuh-gradient-light {
+  background-image: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #809BFE 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.dark .text-tuh-gradient {
+  background-image: linear-gradient(135deg, #a78bfa 0%, #c0d1fc 50%, #809BFE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium Glassmorphism and Cards */
+.tuh-sidebar-active {
+  background-color: rgba(167, 139, 250, 0.22);
+  color: #B03060;
+  border-left-color: #B03060 !important;
+  @apply font-semibold border-l-4 shadow-inner;
+}
+
+.dark .tuh-sidebar-active {
+  background-color: rgba(139, 92, 246, 0.25);
+  color: #ffffff;
+  @apply font-semibold border-l-4 border-purple-400 shadow-inner shadow-black/30;
+}
+
+.tuh-sidebar-inactive {
+  color: #191970;
+  @apply hover:bg-tuh-purple/10 hover:text-[#B03060];
+}
+
+.dark .tuh-sidebar-inactive {
+  color: #cbd5e1;
+  @apply hover:bg-tuh-purple/10 hover:text-white;
+}
+
+/* Light mode premium card glassmorphism */
+html:not(.dark) .bg-white {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Custom scrollbars matching the color theme */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #809BFE;
+  border-radius: 9999px;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #8B5CF6;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #A78BFA;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C0D1FC;
+}
+
+/* Keyframes & Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, -25px) scale(1.05);
+  }
+}
+
+@keyframes floatSlower {
+  0%, 100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate(-25px, 15px) scale(0.95);
+  }
+}
+
+@keyframes ambientGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: floatSlower 12s ease-in-out infinite;
+}
+
+.tuh-resizable-sidebar {
+  width: var(--sidebar-width) !important;
+  min-width: var(--sidebar-width) !important;
+  max-width: var(--sidebar-width) !important;
+}
+
+/* ==========================================
+   DARK MODE ENHANCEMENTS FOR LEGIBILITY & CONTRAST
+   ========================================== */
+html.dark body {
+  background: linear-gradient(-45deg, #04081c, #0d1235, #360759, #660f99) !important;
+  background-size: 400% 400% !important;
+  animation: ambientGlow 15s ease infinite !important;
+  color: #f8fafc !important;
+}
+
+html.dark .dark\:bg-tuh-indigo\/90 {
+  background-color: rgba(13, 18, 53, 0.95) !important; /* Sidebar darker than main area */
+  border-right-color: rgba(139, 92, 246, 0.15) !important;
+}
+
+html.dark .dark\:bg-tuh-indigo\/20 {
+  background-color: rgba(22, 20, 51, 0.70) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .dark\:bg-tuh-navy\/30 {
+  background-color: rgba(15, 10, 36, 0.9) !important; /* Distinct dark background for table headers */
+}
+
+html.dark .dark\:bg-tuh-navy\/40 {
+  background-color: rgba(30, 24, 66, 0.75) !important;
+}
+
+html.dark .dark\:border-tuh-purple\/20 {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Text visibility enhancements in Dark Mode */
+html.dark .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-400 {
+  color: #a1a1aa !important;
+}
+
+html.dark .text-slate-500 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-650 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-800 {
+  color: #ffffff !important;
+}
+
+html.dark input::-webkit-calendar-picker-indicator {
+  filter: invert(1) !important;
+  cursor: pointer;
+}
+
+html.dark .dark\:hover\:border-tuh-purple\/50:hover {
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15) !important;
+}
+
+html.dark .hover\:border-tuh-rose\/40:hover {
+  border-color: #ff4d80 !important;
+  box-shadow: 0 0 15px rgba(255, 77, 128, 0.15) !important;
+}
+
+/* Force font globally for all text elements, excluding icons */
+*:not(i):not([class*="fa-"]):not(.font-roboto) {
+  font-family: 'Sarabun', sans-serif !important;
+}
+
+/* Allow larger headings/stats to keep their relative scaling */
+body .text-2xl,
+body [class*="text-2xl"] {
+  font-size: 1.5rem !important;
+}
+
+body .text-3xl, 
+body [class*="text-3xl"] {
+  font-size: 1.875rem !important;
+}
+
+body .text-5xl, 
+body [class*="text-5xl"] {
+  font-size: 3rem !important;
+}
+
+/* Custom Font classes override wildcard rules */
+.font-roboto, *:not(i):not([class*="fa-"]).font-roboto {
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: normal !important;
+}
+
+/* Reduce font size of navigation and footer items in sidebar */
+aside nav button,
+aside nav a,
+aside .border-t button {
+  font-size: 0.9375rem !important; /* ~15px (increased from 0.75rem / 12px) */
+}
+
+aside nav button i,
+aside .border-t button i {
+  font-size: 1rem !important; /* ~16px (increased from 0.8rem / 12.8px) */
+}
+
+/* Styling for Rich Text Content */
+.html-content ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.html-content ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.html-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.html-content th, .html-content td {
+  border: 1px solid rgba(226, 232, 240, 0.4) !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.html-content a {
+  color: #f43f5e !important; /* tuh-rose color */
+  text-decoration: underline !important;
+}
+
+/* Style CKEditor container to match the theme */
+.cke_chrome {
+  border-radius: 1rem !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important; /* tuh-purple */
+  overflow: hidden !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.cke_inner {
+  background: #f8fafc !important;
+}
+
+.dark .cke_inner {
+  background: #2c0548 !important; /* Dark purple background */
+}
+
+.dark .cke_top {
+  background: #2c0548 !important; /* Darker purple for toolbar */
+  border-bottom: 1px solid rgba(139, 92, 246, 0.25) !important;
+}
+
+.dark .cke_bottom {
+  background: #2c0548 !important; /* Darker purple for status bar */
+  border-top: 1px solid rgba(139, 92, 246, 0.25) !important;
+}
+
+/* Hide CKEditor notifications / banner warnings */
+.cke_notifications_area {
+  display: none !important;
+}
+
+.dark .cke_button_icon {
+  filter: invert(1) !important; /* Make white icons in dark mode */
+}
+
+.dark .cke_combo_text {
+  color: #ffffff !important;
+}
+
+.dark .cke_combo_open {
+  border-left-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+.dark .cke_combo_button {
+  background: #100220 !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+}
+
+.dark .cke_path_item {
+  color: #ffffff !important;
+}

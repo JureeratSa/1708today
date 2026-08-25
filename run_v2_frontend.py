@@ -13,11 +13,11 @@ if hasattr(sys.stderr, 'reconfigure'):
 
 # Paths
 base_dir = os.path.dirname(os.path.abspath(__file__))
-src_frontend = os.path.join(base_dir, "v2", "admin")
-dest_frontend = r"C:\Users\ITS\tuh-admin-frontend"
-log_file_path = os.path.join(base_dir, "admin_dev_server.log")
+src_frontend = os.path.join(base_dir, "v2", "frontend")
+dest_frontend = r"C:\Users\ITS\tuh-chatbot-frontend"
+log_file_path = os.path.join(base_dir, "chatbot_dev_server.log")
 
-print("Initializing Local Admin Dev Mirror on C: drive...")
+print("Initializing Local Chatbot Dev Mirror on C: drive...")
 print(f"Source: {src_frontend}")
 print(f"Destination: {dest_frontend}")
 
@@ -84,7 +84,7 @@ def sync_src_directory():
             try:
                 if not os.path.exists(dest_file) or os.path.getmtime(src_file) > os.path.getmtime(dest_file):
                     safe_copy(src_file, dest_file)
-                    print(f"Synced Admin: {os.path.join('src', rel_path if rel_path != '.' else '', file)}")
+                    print(f"Synced Chatbot: {os.path.join('src', rel_path if rel_path != '.' else '', file)}")
             except Exception as e:
                 print(f"\n[Sync Warning] Failed to copy {file}: {e}")
 
@@ -95,13 +95,13 @@ sync_src_directory()
 # Run npm install on C: if node_modules doesn't exist
 dest_node_modules = os.path.join(dest_frontend, "node_modules")
 if not os.path.exists(dest_node_modules):
-    print("Installing packages on C: drive for Admin frontend...")
+    print("Installing packages on C: drive for Chatbot frontend...")
     subprocess.run("npm install", cwd=dest_frontend, shell=True)
 
-print("Starting Vite dev server on C: drive for Admin frontend (port 5174)...")
+print("Starting Vite dev server on C: drive for Chatbot frontend (port 5173)...")
 # Start npm run dev
 dev_process = subprocess.Popen(
-    "npm run dev -- --force --port 5174",
+    "npm run dev -- --force --port 5173",
     cwd=dest_frontend,
     shell=True,
     stdout=subprocess.PIPE,
